@@ -1,0 +1,132 @@
+﻿<UserControl
+    x:Class="Nocturne.App.UserControls.SideMenuUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Nocturne.App.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Width="60"     
+    d:DesignHeight="640">
+    <Grid Background="#FF222222">
+        <Grid.Resources>
+            <Style TargetType="HyperlinkButton">
+                <Setter Property="Padding" Value="20"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="HyperlinkButton">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="PointerOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                 Storyboard.TargetProperty="Background">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="#FF444444" />
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <ContentPresenter x:Name="ContentPresenter"
+                                                  Background="{TemplateBinding Background}"
+                                                  Padding="{TemplateBinding Padding}" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Padding" Value="20"></Setter>
+                <Setter Property="Background" Value="Transparent"></Setter>
+            </Style>
+            <Style TargetType="Viewbox">
+                <Setter Property="MaxWidth" Value="20"></Setter>
+                <Setter Property="MaxHeight" Value="20"></Setter>
+            </Style>
+            <Style TargetType="SymbolIcon">
+                <Setter Property="Foreground" Value="#FFAAAAAA"></Setter>
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            </Style>
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".9*"/>
+            <RowDefinition Height="121"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Row="0" >
+            <HyperlinkButton ToolTipService.ToolTip="Home" Background="#FF000000" Command="{x:Bind CurrentViewModel.OpenHomePageCommand}">
+                <Viewbox>
+                    <SymbolIcon Symbol="Home"  Foreground="#FFFFFFFF"/>
+                </Viewbox>
+            </HyperlinkButton>
+            
+            <HyperlinkButton ToolTipService.ToolTip="Shopping"
+                    Visibility="{x:Bind CurrentViewModel.IsWorker, Converter={StaticResource falseCollapsed}, Mode=OneTime}" Command="{x:Bind CurrentViewModel.OpenShoppingPageCommand}">
+                <Viewbox>
+                    <SymbolIcon Symbol="Shop"/>
+                </Viewbox>
+            </HyperlinkButton>
+            
+            <HyperlinkButton ToolTipService.ToolTip="Clients" Visibility="{x:Bind CurrentViewModel.IsWorker, Converter={StaticResource falseCollapsed}, Mode=OneTime}" Command="{x:Bind CurrentViewModel.OpenClientListPageCommand}">
+                <Viewbox>
+                    <SymbolIcon Symbol="Contact"/>
+                </Viewbox>
+            </HyperlinkButton>
+            <HyperlinkButton ToolTipService.ToolTip="Active clients" Visibility="{x:Bind CurrentViewModel.IsWorker, Converter={StaticResource falseCollapsed}, Mode=OneTime}" Command="{x:Bind CurrentViewModel.OpenActiveClientListPageCommand}">
+                <Viewbox>
+                    <SymbolIcon Symbol="Globe"/>
+                </Viewbox>
+            </HyperlinkButton>
+
+            <HyperlinkButton x:Name="StartSession" ToolTipService.ToolTip="Start session" Visibility="{x:Bind CurrentViewModel.IsWorker, Converter={StaticResource falseCollapsed}, Mode=OneTime}" Command="{x:Bind CurrentViewModel.OpenSessionStartPageCommand}">
+                <Viewbox>
+                    <SymbolIcon Symbol="Play"/>
+                </Viewbox>
+            </HyperlinkButton>
+
+            <HyperlinkButton x:Name="StopSession" ToolTipService.ToolTip="Stop session" Visibility="{x:Bind CurrentViewModel.IsWorker, Converter={StaticResource falseCollapsed}, Mode=OneTime}" Command="{x:Bind CurrentViewModel.OpenSessionStopPageCommand}">
+                <Viewbox>
+                    <SymbolIcon Symbol="Stop"/>
+                </Viewbox>
+            </HyperlinkButton>
+
+            <HyperlinkButton ToolTipService.ToolTip="Products" Visibility="{x:Bind CurrentViewModel.IsAdministrator, Converter={StaticResource falseCollapsed}, Mode=OneTime}" Command="{x:Bind CurrentViewModel.OpenProductListPageCommand}">
+                <Viewbox>
+                    <SymbolIcon Symbol="AllApps"/>
+                </Viewbox>
+            </HyperlinkButton>
+            
+            <HyperlinkButton ToolTipService.ToolTip="Discounts" Visibility="{x:Bind CurrentViewModel.IsAdministrator, Converter={StaticResource falseCollapsed}, Mode=OneTime}" Command="{x:Bind CurrentViewModel.OpenDiscountListPageCommand}">
+                <Viewbox>
+                    <SymbolIcon Symbol="Tag"/>
+                </Viewbox>
+            </HyperlinkButton>
+
+            <HyperlinkButton ToolTipService.ToolTip="Users" Visibility="{x:Bind CurrentViewModel.IsAdministrator, Converter={StaticResource falseCollapsed}, Mode=OneTime}" Command="{x:Bind CurrentViewModel.OpenUserListPageCommand}">
+                <Viewbox>
+                    <SymbolIcon Symbol="People"/>
+                </Viewbox>
+            </HyperlinkButton>
+        </StackPanel>
+        
+        <StackPanel x:Name="TestingItems" Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="#FF444444">
+            
+            
+            <Button x:Name="btnInstallDirectory" Click="btnInstallDirectory_Click" ToolTipService.ToolTip="Open installation directory">
+                <Viewbox>
+                    <SymbolIcon Symbol="OpenLocal" Foreground="#FF888888"/>
+                </Viewbox>
+            </Button>
+            
+            <Button x:Name="Logout" Command="{x:Bind CurrentViewModel.LogoutCommand}" ToolTipService.ToolTip="Logout">
+                <Viewbox>
+                    <SymbolIcon Symbol="SetLockScreen" Foreground="#FF888888"/>
+                </Viewbox>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

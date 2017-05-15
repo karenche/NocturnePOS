@@ -1,0 +1,70 @@
+﻿<Page
+    x:Class="Nocturne.App.LognPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Nocturne.App"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid Style="{StaticResource DefaultGridPageStyle}">
+        <StackPanel
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center">
+
+            <Image 
+                Source="/Assets/LogotypeLarge.png"
+                Width="390"
+                Margin="0, 0, 0, 40" />
+
+            <TextBlock 
+                Text="Use card or login with master passwod" 
+                Width="400" 
+                Height="42" 
+                FontSize="21.333"
+                Margin="0, 10, 0, 10" />
+
+            <TextBox 
+                x:Name="tbUsername" 
+                Text="SysAdmin" 
+                Width="400" 
+                Height="42" 
+                FontSize="21.333"
+                Margin="0, 10, 0, 10" />
+            
+            <PasswordBox 
+                x:Name="pbPasword" 
+                Password="Master password"
+                Width="400" 
+                Height="42"
+                FontSize="21.333"
+                Margin="0, 10, 0, 10"/>
+            
+            <TextBlock 
+                x:Name="lbError" 
+                Text="Invalid card, username or password" 
+                Visibility="Collapsed"
+                HorizontalAlignment="Center"
+                Margin="0,40,0,0"
+                Foreground="#FFFFDFA8"
+                SelectionHighlightColor="Transparent"
+                FontSize="18.667" />
+
+            <Button 
+        	    x:Name="btnLogn"
+        	    Content="Login"
+        	    Click="btnLogn_Click" 
+        	    Width="140" 
+        	    HorizontalAlignment="Center"
+        	    Height="50"
+        	    FontSize="18.667"
+        	    Foreground="#FFFFFFFF"
+        	    BorderBrush="#FFFFFFFF"
+        	    BorderThickness="3"
+        	    Background="Transparent"
+                ClickMode="Press"
+                Margin="0, 20, 0, 0" 
+                IsEnabled="True" />
+
+        </StackPanel>
+    </Grid>
+</Page>

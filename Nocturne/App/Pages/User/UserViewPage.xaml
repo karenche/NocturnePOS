@@ -1,0 +1,100 @@
+﻿<Page
+    x:Class="Nocturne.App.Pages.User.UserViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Nocturne.App.Pages.User"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Nocturne.App.ViewModels"
+    xmlns:userControls="using:Nocturne.App.UserControls"
+    xmlns:i="using:Windows.UI.Interactivity"
+    mc:Ignorable="d">
+    <Grid Style="{StaticResource DefaultGridPageStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <userControls:SideMenuUserControl CurrentViewModel="{x:Bind CurrentViewModel, Mode=OneTime}" Grid.RowSpan="2" />
+        <userControls:PageHeaderUserControl CurrentViewModel="{x:Bind CurrentViewModel, Mode=OneTime}" Grid.Column="1" />
+
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Padding="40,10">
+                <Button Width="60" Height="50" Background="Orange" FontSize="22" VerticalAlignment="Top" 
+                        Command="{x:Bind CurrentViewModel.OpenUserListPageCommand}">
+                    <Viewbox Width="30" Height="30">
+                        <SymbolIcon Symbol="Back" Foreground="#FF000000"/>
+                    </Viewbox>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" Padding="40,10">
+                <TextBlock Text="Reg. Code" FontSize="20" Foreground="White" Margin="0,0,0,5"/>
+                <TextBox IsReadOnly="{x:Bind CurrentViewModel.PageMode, Converter={StaticResource addFalse}, Mode=OneWay}" Width="420" HorizontalAlignment="Left"
+                    Text="{x:Bind CurrentViewModel.RegCode, Mode=TwoWay}"/>
+                <TextBlock Text="{x:Bind CurrentViewModel.ValidationMessages,Converter={StaticResource validationMessageConverter}, ConverterParameter=RegCode, Mode=OneWay}" 
+                    Foreground="Red" Visibility="{Binding Text, Converter={StaticResource textToVisibilityConverter}, RelativeSource={RelativeSource Mode=Self}}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Vertical" Padding="40,10">
+                <TextBlock Text="Username" FontSize="20" Foreground="White" Margin="0,0,0,5"/>
+                <TextBox IsReadOnly="{x:Bind CurrentViewModel.PageMode, Converter={StaticResource addFalse}, Mode=OneWay}" Width="420" HorizontalAlignment="Left"
+                    Text="{x:Bind CurrentViewModel.Name, Mode=TwoWay}"/>
+                <TextBlock Text="{x:Bind CurrentViewModel.ValidationMessages,Converter={StaticResource validationMessageConverter}, ConverterParameter=Name, Mode=OneWay}"
+                    Foreground="Red" Visibility="{Binding Text, Converter={StaticResource textToVisibilityConverter}, RelativeSource={RelativeSource Mode=Self}}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="3" Orientation="Vertical" Padding="40,10">
+                <TextBlock Text="DisplayName" FontSize="20" Foreground="White" Margin="0,0,0,5"/>
+                <TextBox IsReadOnly="{x:Bind CurrentViewModel.PageMode, Converter={StaticResource viewTrue}, Mode=OneWay}" Width="420" HorizontalAlignment="Left"
+                    Text="{x:Bind CurrentViewModel.DisplayName, Mode=TwoWay}"/>
+                <TextBlock Text="{x:Bind CurrentViewModel.ValidationMessages,Converter={StaticResource validationMessageConverter}, ConverterParameter=DisplayName, Mode=OneWay}" Foreground="Red" Visibility="{Binding Text, Converter={StaticResource textToVisibilityConverter}, RelativeSource={RelativeSource Mode=Self}}"/>
+            </StackPanel>
+
+            <GridView Grid.Row="4" Padding="40,20,0,10" Width="420" Background="#FFEEEEEE" HorizontalAlignment="Left" Margin="40,0,40,20" ItemsSource="{x:Bind CurrentViewModel.UserRoles}" IsEnabled="{x:Bind CurrentViewModel.PageMode, Converter={StaticResource viewFalse}, Mode=OneWay}" >
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="models:UserRoleViewModel">
+                        <StackPanel Orientation="Vertical">
+                            <CheckBox IsChecked="{x:Bind IsSelected, Converter={StaticResource defaultBoolean}, Mode=TwoWay}" Background="{x:Null}"/>
+                            <TextBlock Text="{x:Bind Name, Mode=OneTime}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+
+            <StackPanel Grid.Row="5" Padding="40,20,40,0" Margin="0,20,0,0" Background="#66222222" Orientation="Horizontal">
+                <Button Width="180" Height="50" Background="Orange" FontSize="22" VerticalAlignment="Top"
+                    Command="{x:Bind CurrentViewModel.SaveCommand}" Visibility="{x:Bind CurrentViewModel.PageMode, Converter={StaticResource viewCollapsed}, Mode=OneWay}">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Width="30" Height="30">
+                            <SymbolIcon Symbol="Save" Foreground="#FF000000"/>
+                        </Viewbox>
+                        <TextBlock Text="   Save" Foreground="#FF222222" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
+                <Button Width="180" Height="50" Background="Orange" FontSize="22" VerticalAlignment="Top" Margin="20,0,0,0"
+                    Command="{x:Bind CurrentViewModel.EditCommand}" Visibility="{x:Bind CurrentViewModel.PageMode, Converter={StaticResource viewVisible}, Mode=OneWay}">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Width="30" Height="30">
+                            <SymbolIcon Symbol="Edit" Foreground="#FF000000"/>
+                        </Viewbox>
+                        <TextBlock Text="   Edit" Foreground="#FF222222" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
+

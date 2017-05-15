@@ -1,0 +1,76 @@
+﻿<Page
+    x:Class="Nocturne.App.Pages.Discount.DiscountListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Nocturne.App.Pages.Discount"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Nocturne.App.ViewModels"
+    xmlns:userControls="using:Nocturne.App.UserControls"
+    xmlns:i="using:Windows.UI.Interactivity"
+    mc:Ignorable="d">
+    <Grid Style="{StaticResource DefaultGridPageStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <userControls:SideMenuUserControl CurrentViewModel="{x:Bind CurrentViewModel, Mode=OneTime}" Grid.RowSpan="2" />
+        <userControls:PageHeaderUserControl CurrentViewModel="{x:Bind CurrentViewModel, Mode=OneTime}" Grid.Column="1" />
+        
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Padding="40,40,40,20">
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+                    <Button Grid.Row="0" Width="220" Height="50" Background="Orange" FontSize="22" VerticalAlignment="Top" Command="{x:Bind CurrentViewModel.AddCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <Viewbox Width="30" Height="30">
+                                <SymbolIcon Symbol="Add" Foreground="#FF000000"/>
+                            </Viewbox>
+                            <TextBlock Text="  Add discount" Foreground="#FF222222" FontWeight="SemiBold"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Grid.Row="0" Width="50" Height="50" Background="Orange" FontSize="22" VerticalAlignment="Top" Margin="30,0,0,0" Command="{x:Bind CurrentViewModel.EditCommand}">
+                        <Viewbox Width="30" Height="30">
+                            <SymbolIcon Symbol="Edit" Foreground="#FF222222"/>
+                        </Viewbox>
+                    </Button>
+                    <Button Grid.Row="0" Width="50" Height="50" Background="Orange" FontSize="22" VerticalAlignment="Top" Margin="10,0,0,0" Command="{x:Bind CurrentViewModel.DeleteCommand}">
+                        <Viewbox Width="30" Height="30">
+                            <SymbolIcon Symbol="Delete" Foreground="#FF222222"/>
+                        </Viewbox>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+
+            <GridView Grid.Row="1" x:Name="gridView" Padding="40,10,40,0"
+                      ItemsSource="{x:Bind CurrentViewModel.DiscountList}" SelectionChanged="gridView_SelectionChanged">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="models:DiscountViewModel">
+                        <StackPanel Padding="0,0,20,20" Width="220">
+                            <TextBlock Text="{x:Bind ProductName}" Foreground="#FFCCAACC" FontSize="20" FontWeight="SemiBold"/>
+                            <TextBlock FontSize="15" Foreground="White">
+                                <Run Text="ID: "/>
+                                <Run Text="{x:Bind Id}"/>
+                            </TextBlock>
+                            <TextBlock Text="Discount type: "  FontSize="15" Foreground="White"/>
+                            <TextBlock Text="{x:Bind DiscountTypeName}"  FontSize="15" Foreground="White"/>
+                            <TextBlock FontSize="15" FontWeight="SemiBold" Foreground="Orange">
+                                <Run Text="Discount amount: "/>
+                                <Run Text="{x:Bind AmountPercent}"/>
+                                <Run Text="%"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </Grid>
+    </Grid>
+</Page>

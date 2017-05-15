@@ -1,0 +1,93 @@
+﻿<Page
+    x:Class="Nocturne.App.Pages.User.UserListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Nocturne.App.Pages.User"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Nocturne.App.ViewModels"
+    xmlns:userControls="using:Nocturne.App.UserControls"
+    xmlns:i="using:Windows.UI.Interactivity"
+    mc:Ignorable="d">
+    <Grid Style="{StaticResource DefaultGridPageStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <userControls:SideMenuUserControl CurrentViewModel="{x:Bind CurrentViewModel, Mode=OneTime}" Grid.RowSpan="2" />
+        <userControls:PageHeaderUserControl CurrentViewModel="{x:Bind CurrentViewModel, Mode=OneTime}" Grid.Column="1" />
+
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="240"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Padding="40,40,40,20">
+                <Button Width="60" Height="50" Background="Orange" FontSize="22" VerticalAlignment="Top" Command="{x:Bind CurrentViewModel.OpenHomePageCommand}">
+                    <Viewbox Width="30" Height="30">
+                        <SymbolIcon Symbol="Back" Foreground="#FF000000"/>
+                    </Viewbox>
+                </Button>
+                <Button Width="180" Height="50" Background="Orange" FontSize="22" VerticalAlignment="Top" Margin="20,0,0,0" Command="{x:Bind CurrentViewModel.AddCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Width="30" Height="30">
+                            <SymbolIcon Symbol="Add" Foreground="#FF000000"/>
+                        </Viewbox>
+                        <TextBlock Text="   New user" Foreground="#FF222222" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" Padding="40,10">
+                <TextBlock Text="Name" FontSize="20" Foreground="White" Margin="0,0,0,5"/>
+                <TextBox TextWrapping="Wrap" Text="{x:Bind CurrentViewModel.Name, Mode=TwoWay}" HorizontalAlignment="Left"  Width="420"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Vertical" Padding="40,10">
+                <TextBlock Text="Display Name" FontSize="20" Foreground="White" Margin="0,0,0,5"/>
+                <TextBox TextWrapping="Wrap" Text="{x:Bind CurrentViewModel.DisplayName, Mode=TwoWay}" HorizontalAlignment="Left"  Width="420"/>
+            </StackPanel>
+
+            <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Visible" Padding="40,10,40,0">
+                <GridView x:Name="gridView" Height="240" ItemsSource="{x:Bind CurrentViewModel.SearchResult}" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Tapped">
+                            <i:InvokeCommandAction Command="{x:Bind CurrentViewModel.OpenDetailsCommand}" 
+                                CommandParameter="{Binding SelectedItem, ElementName=gridView}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="models:UserViewModel">
+                            <StackPanel Padding="0,0,20,20" Width="220">
+                                <TextBlock Text="{x:Bind DisplayName}" Foreground="#FFCCAACC" FontSize="20" FontWeight="SemiBold"/>
+                                <TextBlock Text="{x:Bind Name}" Foreground="#FFFFFFFF"/>
+                                <TextBlock FontSize="15" Foreground="Orange" FontWeight="SemiBold" Text="{x:Bind RegCode}"/>
+                            </StackPanel>
+                            </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </ScrollViewer>
+
+            <StackPanel Grid.Row="4" Padding="40,20,40,0" Margin="0,20,0,0" Background="#66222222" MinHeight="80">
+                <Button Width="200" Height="50" Background="Orange" FontSize="22" VerticalAlignment="Top" Command="{x:Bind CurrentViewModel.SearchCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Width="30" Height="30">
+                            <SymbolIcon Symbol="Find" Foreground="#FF000000"/>
+                        </Viewbox>
+                        <TextBlock Text="   Find user" Foreground="#FF222222" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</Page>
+

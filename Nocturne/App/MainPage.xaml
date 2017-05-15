@@ -1,0 +1,85 @@
+﻿<Page
+    x:Class="Nocturne.App.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Nocturne.App"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Nocturne.App.ViewModels"       
+    xmlns:userControls="using:Nocturne.App.UserControls"       
+    xmlns:i="using:Windows.UI.Interactivity"
+    mc:Ignorable="d" d:DesignHeight="700" d:DesignWidth="800">
+    <Grid Style="{StaticResource DefaultGridPageStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <userControls:SideMenuUserControl CurrentViewModel="{x:Bind CurrentViewModel, Mode=OneTime}" Grid.RowSpan="2" />
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid x:Name="Header" Height="120" VerticalAlignment="Top">
+                <Grid.Background>
+                    <ImageBrush Stretch="UniformToFill" ImageSource="Assets/homebg.jpg" />
+                </Grid.Background>
+                <Image Source="/Assets/Logotype.png" Width="180" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="40,20" />
+                <StackPanel HorizontalAlignment="Right"  VerticalAlignment="Bottom" Orientation="Horizontal">
+                    <HyperlinkButton  HorizontalAlignment="Center" FontSize="18" VerticalAlignment="Center" Visibility="{x:Bind CurrentViewModel.IsWorker, Converter={StaticResource falseCollapsed}, Mode=OneTime}" Command="{x:Bind CurrentViewModel.OpenActiveClientListPageCommand}">
+                        <TextBlock x:Name="tbClientsInside" Text="-----------------" Foreground="#FFF0BA04"/>
+                    </HyperlinkButton>
+                    <TextBlock x:Name="tbTime" Text="--:--" Foreground="#FFFFFFFF" FontSize="18" Margin="40,20"/>
+                </StackPanel>
+            </Grid>
+            <StackPanel Orientation="Vertical" Padding="40,160,40,20">
+                <TextBlock Text="Choose section" FontSize="32" Margin="0,0,0,15" Foreground="#FFFAFAFA" FontWeight="Light"/>
+                <StackPanel x:Name="AdminRow" Orientation="Horizontal" Margin="0,0,0,10">
+                    <Button x:Name="Shopping" Height="110" Width="325" Content="Shopping" 
+                        Visibility="{x:Bind CurrentViewModel.IsWorker, Converter={StaticResource falseCollapsed}, Mode=OneTime}" 
+                        Command="{x:Bind CurrentViewModel.OpenShoppingPageCommand}" 
+                        FontSize="18" Foreground="White" Margin="0,0,10,0"/>
+                    <Button x:Name="Clients" Height="110" Width="325" MaxWidth="440" Content="Clients" 
+                        Visibility="{x:Bind CurrentViewModel.IsWorker, Converter={StaticResource falseCollapsed}, Mode=OneTime}" 
+                        Command="{x:Bind CurrentViewModel.OpenClientListPageCommand}" 
+                        FontSize="18" Foreground="White"/>
+                </StackPanel>
+                <StackPanel x:Name="SessionRow" Orientation="Horizontal" Margin="0,0,0,10">
+                    <Button x:Name="StartSession" Height="110" MinWidth="325" MaxWidth="440" ToolTipService.ToolTip="Start session" 
+                        Visibility="{x:Bind CurrentViewModel.IsWorker, Converter={StaticResource falseCollapsed}, Mode=OneTime}" 
+                        Command="{x:Bind CurrentViewModel.OpenSessionStartPageCommand}"
+                        FontSize="18" Foreground="White" Margin="0,0,10,0">
+                        <Viewbox Width="40" Height="40">
+                            <SymbolIcon Symbol="Play" Foreground="#FFEE88AA"/>
+                        </Viewbox>
+                    </Button>
+                    <Button x:Name="StopSession" Height="110" MinWidth="325" MaxWidth="440" ToolTipService.ToolTip="Stop session" 
+                        Visibility="{x:Bind CurrentViewModel.IsWorker, Converter={StaticResource falseCollapsed}, Mode=OneTime}"
+                        Command="{x:Bind CurrentViewModel.OpenSessionStopPageCommand}"
+                            FontSize="18" Foreground="White" Margin="0,0,10,0">
+                        <Viewbox Width="40" Height="40">
+                            <SymbolIcon Symbol="Stop" Foreground="#FFEE88AA"/>
+                        </Viewbox>
+                    </Button>
+                </StackPanel>
+                <StackPanel x:Name="WorkerRow" Orientation="Horizontal" Margin="0,0,0,10">
+                    <Button x:Name="Products" Height="110" MinWidth="325" MaxWidth="440" Content="Products" 
+                        Visibility="{x:Bind CurrentViewModel.IsAdministrator, Converter={StaticResource falseCollapsed}, Mode=OneTime}"  
+                        Command="{x:Bind CurrentViewModel.OpenProductListPageCommand}" 
+                        FontSize="18" Foreground="White" Margin="0,0,10,0"/>
+                    <Button x:Name="Discounts" Height="110" Width="325" MaxWidth="440" Content="Discounts" 
+                        Visibility="{x:Bind CurrentViewModel.IsAdministrator, Converter={StaticResource falseCollapsed}, Mode=OneTime}" 
+                        Command="{x:Bind CurrentViewModel.OpenDiscountListPageCommand}" 
+                        FontSize="18" Foreground="White"/>
+                </StackPanel>
+                <StackPanel x:Name="SecondRow" Orientation="Horizontal" Margin="0,0,0,10">
+                    <Button x:Name="Users" Height="110" Width="660" Content="Users" 
+                        Visibility="{x:Bind CurrentViewModel.IsAdministrator, Converter={StaticResource falseCollapsed}, Mode=OneTime}" 
+                        Command="{x:Bind CurrentViewModel.OpenUserListPageCommand}" 
+                        FontSize="18" Foreground="White"/>
+                    <!-- TODO: fix worker view -->
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

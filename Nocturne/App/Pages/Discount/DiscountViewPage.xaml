@@ -1,0 +1,80 @@
+﻿<Page
+    x:Class="Nocturne.App.Pages.Discount.DiscountViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Nocturne.App.Pages.Discount"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:Nocturne.App.ViewModels"
+    xmlns:userControls="using:Nocturne.App.UserControls"
+    xmlns:i="using:Windows.UI.Interactivity"
+    mc:Ignorable="d" Loaded="Page_Loaded">
+    
+    <Grid Style="{StaticResource DefaultGridPageStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <userControls:SideMenuUserControl CurrentViewModel="{x:Bind CurrentViewModel, Mode=OneTime}" Grid.RowSpan="2" />
+        <userControls:PageHeaderUserControl CurrentViewModel="{x:Bind CurrentViewModel, Mode=OneTime}" Grid.Column="1" />
+
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Padding="40,40,40,20">
+                <Button Width="60" Height="50" Background="Orange" FontSize="22" VerticalAlignment="Top" Command="{x:Bind CurrentViewModel.OpenDiscountListPageCommand}">
+                    <Viewbox Width="30" Height="30">
+                        <SymbolIcon Symbol="Back" Foreground="#FF000000"/>
+                    </Viewbox>
+                </Button>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" Padding="40,10">
+                <TextBlock Text="Product" FontSize="20" Foreground="White" Margin="0,0,0,5"/>
+                <StackPanel>
+                    <ComboBox x:Name="cbProduct" SelectedValue="{x:Bind CurrentViewModel.ProductId, Converter={StaticResource idConverter}, Mode=TwoWay}" 
+                          ItemsSource="{x:Bind CurrentViewModel.Products}" SelectedValuePath="Id" DisplayMemberPath="Name" Width="420" HorizontalAlignment="Left" />
+                    <TextBlock Text="{x:Bind CurrentViewModel.ValidationMessages, Converter={StaticResource validationMessageConverter}, ConverterParameter=ProductId, Mode=OneWay}" Foreground="Red" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Vertical" Padding="40,10">
+                <TextBlock Text="Discount type" FontSize="20" Foreground="White" Margin="0,0,0,5"/>
+                <StackPanel>
+                    <ComboBox x:Name="cbDiscountType" SelectedValue="{x:Bind CurrentViewModel.DiscountTypeId, Converter={StaticResource idConverter}, Mode=TwoWay}" 
+                          ItemsSource="{x:Bind CurrentViewModel.DiscountTypes}" SelectedValuePath="Id" DisplayMemberPath="Name" Width="420" HorizontalAlignment="Left"/>
+                    <TextBlock Text="{x:Bind CurrentViewModel.ValidationMessages, Converter={StaticResource validationMessageConverter}, ConverterParameter=DiscountTypeId, Mode=OneWay}" Foreground="Red" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="3" Orientation="Vertical" Padding="40,10,40,60">
+                <TextBlock Text="Amount %" FontSize="20" Foreground="White" Margin="0,0,0,5"/>
+                <StackPanel>
+                    <TextBox Text="{x:Bind CurrentViewModel.AmountPercent, Mode=TwoWay}" Width="420" HorizontalAlignment="Left"/>
+                    <TextBlock Text="{x:Bind CurrentViewModel.ValidationMessages,Converter={StaticResource validationMessageConverter}, ConverterParameter=AmountPercent, Mode=OneWay}" Foreground="Red" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="4" Padding="40,20,40,0" Background="#66222222">
+                <Button Width="220" Height="50" Background="Orange" FontSize="22" VerticalAlignment="Top" Command="{x:Bind CurrentViewModel.SaveCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Width="30" Height="30">
+                            <SymbolIcon Symbol="Save" Foreground="#FF000000"/>
+                        </Viewbox>
+                        <TextBlock Text="   Save discount" Foreground="#FF222222" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
