@@ -1,5 +1,7 @@
 # Introduction
-"Nocturne" UWP Point Of Sale System written in C#
+"Nocturne" Point Of Sale System 
+- C#
+- UWP
 
 
 # Technical analysis
